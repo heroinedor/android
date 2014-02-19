@@ -4,5 +4,10 @@
     <string name="app_name">InAndOut</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="username_string">Login</string>
+    <string name="password_string">Password</string>
+    <string name="enter_username_hint">Enter username</string>
+    <string name="enter_password_hint">Enter Password</string>
+    <string name="authenticate_button">Validate</string>
 
 </resources>
