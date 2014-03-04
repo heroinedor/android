@@ -136,9 +136,16 @@ public class BubbleActivity extends Activity {
 				// You can get all Views in mFrame using the
 				// ViewGroup.getChildCount() method
 
+				float eventPosX = event1.getX();
+				float eventPosY = event1.getY();
 				
-				
-				
+				for (int i = 0; i < mFrame.getChildCount();i++ ){
+					BubbleView child = (BubbleView)mFrame.getChildAt(i);
+					if (child.intersects(eventPosX, eventPosY)){
+						child.deflect(velocityX, velocityY);
+						return false;
+					}
+				}
 				return false;
 				
 			}
