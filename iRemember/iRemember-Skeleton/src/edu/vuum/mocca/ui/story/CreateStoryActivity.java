@@ -231,19 +231,20 @@ public class CreateStoryActivity extends StoryActivityBase {
 	private void launchSoundIntent() {
 		
 		// TODO - Create a new intent to launch the SoundRecordActivity activity
-
+		Intent soundRecordIntent = new Intent(getApplicationContext(),SoundRecordActivity.class); 
 		
 		// TODO - Use getOutputMediaFile() to create a new 
 		// filename for this specific sound file
-		
+		File soundFile = getOutputMediaFile(MEDIA_TYPE_AUDIO);
 		
 		// TODO - Add the filename to the Intent as an extra. Use the Intent-extra name
 		// from the SoundRecordActivity class, EXTRA_OUTPUT
+		soundRecordIntent.putExtra(SoundRecordActivity.EXTRA_OUTPUT, soundFile.getName());
 
 		
 		// TODO - Start a new activity for result, using the new intent and the request
 		// code MIC_SOUND_REQUEST
-		
+		startActivityForResult(soundRecordIntent, MIC_SOUND_REQUEST);
 	}
 	
 	// This function creates a new Intent to launch the built-in Camera activity
