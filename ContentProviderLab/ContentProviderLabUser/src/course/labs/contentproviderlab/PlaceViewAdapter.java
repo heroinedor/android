@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -69,12 +70,14 @@ public class PlaceViewAdapter extends CursorAdapter {
 		// the current set of PlaceRecords. Use the 
 		// getPlaceRecordFromCursor() method to add the
 		// current place to the list
-		
+			list.clear();
 
-            
-            
-            
-            
+			if (newCursor.moveToFirst()) {
+				do{
+					PlaceRecord placeRecord = getPlaceRecordFromCursor(newCursor);
+					list.add(placeRecord);				
+				}while (newCursor.moveToNext());
+			}
             
             // Set the NotificationURI for the new cursor
 			newCursor.setNotificationUri(mContext.getContentResolver(),
@@ -146,13 +149,14 @@ public class PlaceViewAdapter extends CursorAdapter {
 			list.add(listItem);
 
 			// TODO - Insert new record into the ContentProvider
-
-			
-
-		
-        
-        
-        
+			ContentValues values = new ContentValues();
+			values.put(PlaceBadgesContract.COUNTRY_NAME, listItem.getCountryName());
+			values.put(PlaceBadgesContract.FLAG_BITMAP_PATH, listItem.getFlagBitmapPath());
+			values.put(PlaceBadgesContract.PLACE_NAME, listItem.getPlace());
+			values.put(PlaceBadgesContract.LAT, listItem.getLat());
+			values.put(PlaceBadgesContract.LON, listItem.getLon());
+			Uri newUri = mContext.getContentResolver().insert(PlaceBadgesContract.CONTENT_URI, values);
+			mContext.getContentResolver().notifyChange(newUri, null);
         }
 
 	}
@@ -166,11 +170,11 @@ public class PlaceViewAdapter extends CursorAdapter {
 		list.clear();
 
 		// TODO - delete all records in the ContentProvider
+		ContentResolver cr =  mContext.getContentResolver();
+		String mSelectionClause = " LIKE ?";
+		String[] mSelectionArgs = {"*"};
 
-
-        
-        
-        
+		cr.delete(PlaceBadgesContract.CONTENT_URI, mSelectionClause,mSelectionArgs);
 	}
 
 	@Override
